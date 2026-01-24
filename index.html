@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习资源中心 - 教科书下载</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+        }
+
+        /* 页面主体样式 */
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 头部导航栏 */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #3498db;
+        }
+
+        /* 主要内容区域 */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 5%;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: #3498db;
+            margin: 0.5rem auto;
+        }
+
+        /* 分类筛选栏 */
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.2rem;
+            background-color: white;
+            border: 1px solid #3498db;
+            border-radius: 20px;
+            color: #3498db;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #3498db;
+            color: white;
+        }
+
+        /* 教科书卡片容器 */
+        .textbook-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* 教科书卡片样式 */
+        .textbook-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .textbook-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .textbook-title {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .textbook-info {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .textbook-info p {
+            margin-bottom: 0.3rem;
+        }
+
+        /* 下载按钮样式 */
+        .download-btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            width: 100%;
+        }
+
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="header-container">
+            <div class="logo">学习资源中心</div>
+            <nav>
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#" class="active">教科书下载</a></li>
+                    <li><a href="#">学习指南</a></li>
+                    <li><a href="#">关于我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+        <h1 class="page-title">教科书PDF下载</h1>
+        
+        <!-- 分类筛选 -->
+        <div class="category-filter">
+            <button class="filter-btn active" data-category="all">全部</button>
+            <button class="filter-btn" data-category="math">数学类</button>
+            <button class="filter-btn" data-category="computer">计算机类</button>
+            <button class="filter-btn" data-category="physics">物理类</button>
+            <button class="filter-btn" data-category="economics">经济类</button>
+            <button class="filter-btn" data-category="english">英语类</button>
+            <button class="filter-btn" data-category="engineering">工程类</button>
+            <button class="filter-btn" data-category="chemistry">化学类</button>
+            <button class="filter-btn" data-category="biology">生物类</button>
+        </div>
+        
+        <!-- 教科书列表 -->
+        <div class="textbook-container">
+            <!-- 数学类 (math) -->
+            <div class="textbook-card" data-category="math">
+                <h2 class="textbook-title">高等数学（第七版）上册</h2>
+                <div class="textbook-info">
+                    <p>作者：同济大学数学系</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：理工科各专业</p>
+                </div>
+                <a href="textbooks/高等数学第七版上册.pdf" class="download-btn" download="高等数学第七版上册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="math">
+                <h2 class="textbook-title">高等数学（第七版）下册</h2>
+                <div class="textbook-info">
+                    <p>作者：同济大学数学系</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：理工科各专业</p>
+                </div>
+                <a href="textbooks/高等数学第七版下册.pdf" class="download-btn" download="高等数学第七版下册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="math">
+                <h2 class="textbook-title">线性代数（第六版）</h2>
+                <div class="textbook-info">
+                    <p>作者：同济大学数学系</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：理工科各专业</p>
+                </div>
+                <a href="textbooks/线性代数第六版.pdf" class="download-btn" download="线性代数第六版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="math">
+                <h2 class="textbook-title">概率论与数理统计（第四版）</h2>
+                <div class="textbook-info">
+                    <p>作者：浙江大学盛骤等</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：理工科各专业</p>
+                </div>
+                <a href="textbooks/概率论与数理统计第四版.pdf" class="download-btn" download="概率论与数理统计第四版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="math">
+                <h2 class="textbook-title">离散数学（第五版）</h2>
+                <div class="textbook-info">
+                    <p>作者：耿素云、屈婉玲</p>
+                    <p>出版社：清华大学出版社</p>
+                    <p>适用专业：计算机相关专业</p>
+                </div>
+                <a href="textbooks/离散数学第五版.pdf" class="download-btn" download="离散数学第五版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="math">
+                <h2 class="textbook-title">数学分析（第四版）上册</h2>
+                <div class="textbook-info">
+                    <p>作者：华东师范大学数学系</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：数学专业</p>
+                </div>
+                <a href="textbooks/数学分析第四版上册.pdf" class="download-btn" download="数学分析第四版上册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="math">
+                <h2 class="textbook-title">数学分析（第四版）下册</h2>
+                <div class="textbook-info">
+                    <p>作者：华东师范大学数学系</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：数学专业</p>
+                </div>
+                <a href="textbooks/数学分析第四版下册.pdf" class="download-btn" download="数学分析第四版下册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="math">
+                <h2 class="textbook-title">复变函数与积分变换（第四版）</h2>
+                <div class="textbook-info">
+                    <p>作者：西安交通大学高等数学教研室</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：电气、通信专业</p>
+                </div>
+                <a href="textbooks/复变函数与积分变换第四版.pdf" class="download-btn" download="复变函数与积分变换第四版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="math">
+                <h2 class="textbook-title">常微分方程（第三版）</h2>
+                <div class="textbook-info">
+                    <p>作者：王高雄、周之铭</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：数学、物理专业</p>
+                </div>
+                <a href="textbooks/常微分方程第三版.pdf" class="download-btn" download="常微分方程第三版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="math">
+                <h2 class="textbook-title">数值分析（第五版）</h2>
+                <div class="textbook-info">
+                    <p>作者：李庆扬、王能超</p>
+                    <p>出版社：清华大学出版社</p>
+                    <p>适用专业：计算数学、计算机专业</p>
+                </div>
+                <a href="textbooks/数值分析第五版.pdf" class="download-btn" download="数值分析第五版.pdf">点击下载PDF</a>
+            </div>
+
+            <!-- 计算机类 (computer) -->
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">Python编程：从入门到实践</h2>
+                <div class="textbook-info">
+                    <p>作者：埃里克·马瑟斯</p>
+                    <p>出版社：人民邮电出版社</p>
+                    <p>适用阶段：编程入门</p>
+                </div>
+                <a href="textbooks/Python编程从入门到实践.pdf" class="download-btn" download="Python编程从入门到实践.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">数据结构与算法分析（C语言版）</h2>
+                <div class="textbook-info">
+                    <p>作者：马克·艾伦·维斯</p>
+                    <p>出版社：机械工业出版社</p>
+                    <p>适用专业：计算机相关专业</p>
+                </div>
+                <a href="textbooks/数据结构与算法分析C语言版.pdf" class="download-btn" download="数据结构与算法分析C语言版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">计算机网络（第八版）</h2>
+                <div class="textbook-info">
+                    <p>作者：谢希仁</p>
+                    <p>出版社：电子工业出版社</p>
+                    <p>适用专业：计算机、通信专业</p>
+                </div>
+                <a href="textbooks/计算机网络第八版.pdf" class="download-btn" download="计算机网络第八版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">操作系统（第四版）</h2>
+                <div class="textbook-info">
+                    <p>作者：汤子瀛、哲凤屏</p>
+                    <p>出版社：西安电子科技大学出版社</p>
+                    <p>适用专业：计算机相关专业</p>
+                </div>
+                <a href="textbooks/操作系统第四版.pdf" class="download-btn" download="操作系统第四版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">数据库系统概论（第五版）</h2>
+                <div class="textbook-info">
+                    <p>作者：王珊、萨师煊</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：计算机相关专业</p>
+                </div>
+                <a href="textbooks/数据库系统概论第五版.pdf" class="download-btn" download="数据库系统概论第五版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">C程序设计（第五版）</h2>
+                <div class="textbook-info">
+                    <p>作者：谭浩强</p>
+                    <p>出版社：清华大学出版社</p>
+                    <p>适用阶段：编程入门</p>
+                </div>
+                <a href="textbooks/C程序设计第五版.pdf" class="download-btn" download="C程序设计第五版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">Java编程思想（第四版）</h2>
+                <div class="textbook-info">
+                    <p>作者：Bruce Eckel</p>
+                    <p>出版社：机械工业出版社</p>
+                    <p>适用专业：计算机相关专业</p>
+                </div>
+                <a href="textbooks/Java编程思想第四版.pdf" class="download-btn" download="Java编程思想第四版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">编译原理（第二版）</h2>
+                <div class="textbook-info">
+                    <p>作者：陈火旺、刘春林</p>
+                    <p>出版社：国防工业出版社</p>
+                    <p>适用专业：计算机科学与技术</p>
+                </div>
+                <a href="textbooks/编译原理第二版.pdf" class="download-btn" download="编译原理第二版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">人工智能：一种现代的方法（第四版）</h2>
+                <div class="textbook-info">
+                    <p>作者：斯图尔特·罗素</p>
+                    <p>出版社：清华大学出版社</p>
+                    <p>适用专业：人工智能、计算机专业</p>
+                </div>
+                <a href="textbooks/人工智能一种现代的方法第四版.pdf" class="download-btn" download="人工智能一种现代的方法第四版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">机器学习（西瓜书）</h2>
+                <div class="textbook-info">
+                    <p>作者：周志华</p>
+                    <p>出版社：清华大学出版社</p>
+                    <p>适用专业：计算机、人工智能专业</p>
+                </div>
+                <a href="textbooks/机器学习周志华.pdf" class="download-btn" download="机器学习周志华.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">深度学习（花书）</h2>
+                <div class="textbook-info">
+                    <p>作者：Ian Goodfellow</p>
+                    <p>出版社：人民邮电出版社</p>
+                    <p>适用专业：人工智能、计算机专业</p>
+                </div>
+                <a href="textbooks/深度学习花书.pdf" class="download-btn" download="深度学习花书.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="computer">
+                <h2 class="textbook-title">计算机组成原理（第五版）</h2>
+                <div class="textbook-info">
+                    <p>作者：唐朔飞</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：计算机相关专业</p>
+                </div>
+                <a href="textbooks/计算机组成原理第五版.pdf" class="download-btn" download="计算机组成原理第五版.pdf">点击下载PDF</a>
+            </div>
+
+            <!-- 物理类 (physics) -->
+            <div class="textbook-card" data-category="physics">
+                <h2 class="textbook-title">大学物理（第五版）</h2>
+                <div class="textbook-info">
+                    <p>作者：张三慧</p>
+                    <p>出版社：清华大学出版社</p>
+                    <p>适用专业：非物理专业理工科</p>
+                </div>
+                <a href="textbooks/大学物理第五版.pdf" class="download-btn" download="大学物理第五版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="physics">
+                <h2 class="textbook-title">普通物理学（第七版）上册</h2>
+                <div class="textbook-info">
+                    <p>作者：程守洙、江之永</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：物理、理工科专业</p>
+                </div>
+                <a href="textbooks/普通物理学第七版上册.pdf" class="download-btn" download="普通物理学第七版上册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="physics">
+                <h2 class="textbook-title">普通物理学（第七版）下册</h2>
+                <div class="textbook-info">
+                    <p>作者：程守洙、江之永</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：物理、理工科专业</p>
+                </div>
+                <a href="textbooks/普通物理学第七版下册.pdf" class="download-btn" download="普通物理学第七版下册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="physics">
+                <h2 class="textbook-title">电磁学（第四版）</h2>
+                <div class="textbook-info">
+                    <p>作者：赵凯华、陈熙谋</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：物理专业</p>
+                </div>
+                <a href="textbooks/电磁学第四版.pdf" class="download-btn" download="电磁学第四版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="physics">
+                <h2 class="textbook-title">热学（第三版）</h2>
+                <div class="textbook-info">
+                    <p>作者：赵凯华、罗蔚茵</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：物理专业</p>
+                </div>
+                <a href="textbooks/热学第三版.pdf" class="download-btn" download="热学第三版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="physics">
+                <h2 class="textbook-title">光学（第二版）</h2>
+                <div class="textbook-info">
+                    <p>作者：姚启钧</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：物理专业</p>
+                </div>
+                <a href="textbooks/光学第二版.pdf" class="download-btn" download="光学第二版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="physics">
+                <h2 class="textbook-title">量子力学导论（第二版）</h2>
+                <div class="textbook-info">
+                    <p>作者：曾谨言</p>
+                    <p>出版社：北京大学出版社</p>
+                    <p>适用专业：物理专业</p>
+                </div>
+                <a href="textbooks/量子力学导论第二版.pdf" class="download-btn" download="量子力学导论第二版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="physics">
+                <h2 class="textbook-title">理论力学（第八版）</h2>
+                <div class="textbook-info">
+                    <p>作者：哈尔滨工业大学理论力学教研室</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：物理、力学专业</p>
+                </div>
+                <a href="textbooks/理论力学第八版.pdf" class="download-btn" download="理论力学第八版.pdf">点击下载PDF</a>
+            </div>
+
+            <!-- 经济类 (economics) -->
+            <div class="textbook-card" data-category="economics">
+                <h2 class="textbook-title">经济学原理（曼昆版）微观经济学分册</h2>
+                <div class="textbook-info">
+                    <p>作者：N·格里高利·曼昆</p>
+                    <p>出版社：北京大学出版社</p>
+                    <p>适用专业：经济学相关专业</p>
+                </div>
+                <a href="textbooks/经济学原理曼昆微观.pdf" class="download-btn" download="经济学原理曼昆微观.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="economics">
+                <h2 class="textbook-title">经济学原理（曼昆版）宏观经济学分册</h2>
+                <div class="textbook-info">
+                    <p>作者：N·格里高利·曼昆</p>
+                    <p>出版社：北京大学出版社</p>
+                    <p>适用专业：经济学相关专业</p>
+                </div>
+                <a href="textbooks/经济学原理曼昆宏观.pdf" class="download-btn" download="经济学原理曼昆宏观.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="economics">
+                <h2 class="textbook-title">西方经济学（第七版）微观部分</h2>
+                <div class="textbook-info">
+                    <p>作者：高鸿业</p>
+                    <p>出版社：中国人民大学出版社</p>
+                    <p>适用专业：经济学相关专业</p>
+                </div>
+                <a href="textbooks/西方经济学第七版微观.pdf" class="download-btn" download="西方经济学第七版微观.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="economics">
+                <h2 class="textbook-title">西方经济学（第七版）宏观部分</h2>
+                <div class="textbook-info">
+                    <p>作者：高鸿业</p>
+                    <p>出版社：中国人民大学出版社</p>
+                    <p>适用专业：经济学相关专业</p>
+                </div>
+                <a href="textbooks/西方经济学第七版宏观.pdf" class="download-btn" download="西方经济学第七版宏观.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="economics">
+                <h2 class="textbook-title">货币银行学（第六版）</h2>
+                <div class="textbook-info">
+                    <p>作者：黄达</p>
+                    <p>出版社：中国人民大学出版社</p>
+                    <p>适用专业：金融、经济专业</p>
+                </div>
+                <a href="textbooks/货币银行学第六版.pdf" class="download-btn" download="货币银行学第六版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="economics">
+                <h2 class="textbook-title">财政学（第九版）</h2>
+                <div class="textbook-info">
+                    <p>作者：陈共</p>
+                    <p>出版社：中国人民大学出版社</p>
+                    <p>适用专业：财政、经济专业</p>
+                </div>
+                <a href="textbooks/财政学第九版.pdf" class="download-btn" download="财政学第九版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="economics">
+                <h2 class="textbook-title">计量经济学（第四版）</h2>
+                <div class="textbook-info">
+                    <p>作者：李子奈、潘文卿</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：经济学相关专业</p>
+                </div>
+                <a href="textbooks/计量经济学第四版.pdf" class="download-btn" download="计量经济学第四版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="economics">
+                <h2 class="textbook-title">国际经济学（第十版）</h2>
+                <div class="textbook-info">
+                    <p>作者：保罗·克鲁格曼</p>
+                    <p>出版社：中国人民大学出版社</p>
+                    <p>适用专业：国际经济与贸易</p>
+                </div>
+                <a href="textbooks/国际经济学第十版.pdf" class="download-btn" download="国际经济学第十版.pdf">点击下载PDF</a>
+            </div>
+
+            <!-- 英语类 (english) -->
+            <div class="textbook-card" data-category="english">
+                <h2 class="textbook-title">新视野大学英语（第三版）读写教程1</h2>
+                <div class="textbook-info">
+                    <p>作者：郑树棠</p>
+                    <p>出版社：外语教学与研究出版社</p>
+                    <p>适用阶段：大学英语一级</p>
+                </div>
+                <a href="textbooks/新视野大学英语第三版读写教程1.pdf" class="download-btn" download="新视野大学英语第三版读写教程1.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="english">
+                <h2 class="textbook-title">新视野大学英语（第三版）读写教程2</h2>
+                <div class="textbook-info">
+                    <p>作者：郑树棠</p>
+                    <p>出版社：外语教学与研究出版社</p>
+                    <p>适用阶段：大学英语二级</p>
+                </div>
+                <a href="textbooks/新视野大学英语第三版读写教程2.pdf" class="download-btn" download="新视野大学英语第三版读写教程2.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="english">
+                <h2 class="textbook-title">新视野大学英语（第三版）读写教程3</h2>
+                <div class="textbook-info">
+                    <p>作者：郑树棠</p>
+                    <p>出版社：外语教学与研究出版社</p>
+                    <p>适用阶段：大学英语三级</p>
+                </div>
+                <a href="textbooks/新视野大学英语第三版读写教程3.pdf" class="download-btn" download="新视野大学英语第三版读写教程3.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="english">
+                <h2 class="textbook-title">新视野大学英语（第三版）读写教程4</h2>
+                <div class="textbook-info">
+                    <p>作者：郑树棠</p>
+                    <p>出版社：外语教学与研究出版社</p>
+                    <p>适用阶段：大学英语四级</p>
+                </div>
+                <a href="textbooks/新视野大学英语第三版读写教程4.pdf" class="download-btn" download="新视野大学英语第三版读写教程4.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="english">
+                <h2 class="textbook-title">新编大学英语（第四版）综合教程1</h2>
+                <div class="textbook-info">
+                    <p>作者：应惠兰</p>
+                    <p>出版社：外语教学与研究出版社</p>
+                    <p>适用阶段：大学英语一级</p>
+                </div>
+                <a href="textbooks/新编大学英语第四版综合教程1.pdf" class="download-btn" download="新编大学英语第四版综合教程1.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="english">
+                <h2 class="textbook-title">新编大学英语（第四版）综合教程2</h2>
+                <div class="textbook-info">
+                    <p>作者：应惠兰</p>
+                    <p>出版社：外语教学与研究出版社</p>
+                    <p>适用阶段：大学英语二级</p>
+                </div>
+                <a href="textbooks/新编大学英语第四版综合教程2.pdf" class="download-btn" download="新编大学英语第四版综合教程2.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="english">
+                <h2 class="textbook-title">大学英语四级考试指南（最新版）</h2>
+                <div class="textbook-info">
+                    <p>作者：王长喜</p>
+                    <p>出版社：中国人民大学出版社</p>
+                    <p>适用阶段：四级备考</p>
+                </div>
+                <a href="textbooks/大学英语四级考试指南最新版.pdf" class="download-btn" download="大学英语四级考试指南最新版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="english">
+                <h2 class="textbook-title">大学英语六级考试指南（最新版）</h2>
+                <div class="textbook-info">
+                    <p>作者：王长喜</p>
+                    <p>出版社：中国人民大学出版社</p>
+                    <p>适用阶段：六级备考</p>
+                </div>
+                <a href="textbooks/大学英语六级考试指南最新版.pdf" class="download-btn" download="大学英语六级考试指南最新版.pdf">点击下载PDF</a>
+            </div>
+
+            <!-- 工程类 (engineering) -->
+            <div class="textbook-card" data-category="engineering">
+                <h2 class="textbook-title">电路（第六版）</h2>
+                <div class="textbook-info">
+                    <p>作者：邱关源、罗先觉</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：电气、自动化专业</p>
+                </div>
+                <a href="textbooks/电路第六版.pdf" class="download-btn" download="电路第六版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="engineering">
+                <h2 class="textbook-title">模拟电子技术基础（第五版）</h2>
+                <div class="textbook-info">
+                    <p>作者：童诗白、华成英</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：电子、电气专业</p>
+                </div>
+                <a href="textbooks/模拟电子技术基础第五版.pdf" class="download-btn" download="模拟电子技术基础第五版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="engineering">
+                <h2 class="textbook-title">数字电子技术基础（第六版）</h2>
+                <div class="textbook-info">
+                    <p>作者：阎石</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：电子、电气专业</p>
+                </div>
+                <a href="textbooks/数字电子技术基础第六版.pdf" class="download-btn" download="数字电子技术基础第六版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="engineering">
+                <h2 class="textbook-title">自动控制原理（第七版）</h2>
+                <div class="textbook-info">
+                    <p>作者：胡寿松</p>
+                    <p>出版社：科学出版社</p>
+                    <p>适用专业：自动化、控制专业</p>
+                </div>
+                <a href="textbooks/自动控制原理第七版.pdf" class="download-btn" download="自动控制原理第七版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="engineering">
+                <h2 class="textbook-title">机械设计（第十版）</h2>
+                <div class="textbook-info">
+                    <p>作者：濮良贵、纪名刚</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：机械设计专业</p>
+                </div>
+                <a href="textbooks/机械设计第十版.pdf" class="download-btn" download="机械设计第十版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="engineering">
+                <h2 class="textbook-title">材料力学（第六版）上册</h2>
+                <div class="textbook-info">
+                    <p>作者：刘鸿文</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：机械、土木专业</p>
+                </div>
+                <a href="textbooks/材料力学第六版上册.pdf" class="download-btn" download="材料力学第六版上册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="engineering">
+                <h2 class="textbook-title">材料力学（第六版）下册</h2>
+                <div class="textbook-info">
+                    <p>作者：刘鸿文</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：机械、土木专业</p>
+                </div>
+                <a href="textbooks/材料力学第六版下册.pdf" class="download-btn" download="材料力学第六版下册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="engineering">
+                <h2 class="textbook-title">土木工程概论（第五版）</h2>
+                <div class="textbook-info">
+                    <p>作者：叶志明</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：土木工程专业</p>
+                </div>
+                <a href="textbooks/土木工程概论第五版.pdf" class="download-btn" download="土木工程概论第五版.pdf">点击下载PDF</a>
+            </div>
+
+            <!-- 化学类 (chemistry) -->
+            <div class="textbook-card" data-category="chemistry">
+                <h2 class="textbook-title">无机化学（第六版）</h2>
+                <div class="textbook-info">
+                    <p>作者：宋天佑、程鹏</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：化学、化工专业</p>
+                </div>
+                <a href="textbooks/无机化学第六版.pdf" class="download-btn" download="无机化学第六版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="chemistry">
+                <h2 class="textbook-title">有机化学（第八版）</h2>
+                <div class="textbook-info">
+                    <p>作者：邢其毅、裴伟伟</p>
+                    <p>出版社：北京大学出版社</p>
+                    <p>适用专业：化学、化工专业</p>
+                </div>
+                <a href="textbooks/有机化学第八版.pdf" class="download-btn" download="有机化学第八版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="chemistry">
+                <h2 class="textbook-title">分析化学（第七版）上册</h2>
+                <div class="textbook-info">
+                    <p>作者：华东理工大学等</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：化学、化工专业</p>
+                </div>
+                <a href="textbooks/分析化学第七版上册.pdf" class="download-btn" download="分析化学第七版上册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="chemistry">
+                <h2 class="textbook-title">物理化学（第六版）上册</h2>
+                <div class="textbook-info">
+                    <p>作者：天津大学物理化学教研室</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：化学、化工专业</p>
+                </div>
+                <a href="textbooks/物理化学第六版上册.pdf" class="download-btn" download="物理化学第六版上册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="chemistry">
+                <h2 class="textbook-title">物理化学（第六版）下册</h2>
+                <div class="textbook-info">
+                    <p>作者：天津大学物理化学教研室</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：化学、化工专业</p>
+                </div>
+                <a href="textbooks/物理化学第六版下册.pdf" class="download-btn" download="物理化学第六版下册.pdf">点击下载PDF</a>
+            </div>
+
+            <!-- 生物类 (biology) -->
+            <div class="textbook-card" data-category="biology">
+                <h2 class="textbook-title">普通生物学（第四版）</h2>
+                <div class="textbook-info">
+                    <p>作者：陈阅增</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：生物相关专业</p>
+                </div>
+                <a href="textbooks/普通生物学第四版.pdf" class="download-btn" download="普通生物学第四版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="biology">
+                <h2 class="textbook-title">细胞生物学（第五版）</h2>
+                <div class="textbook-info">
+                    <p>作者：翟中和、王喜忠</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：生物专业</p>
+                </div>
+                <a href="textbooks/细胞生物学第五版.pdf" class="download-btn" download="细胞生物学第五版.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="biology">
+                <h2 class="textbook-title">生物化学（第四版）上册</h2>
+                <div class="textbook-info">
+                    <p>作者：王镜岩、朱圣庚</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：生物专业</p>
+                </div>
+                <a href="textbooks/生物化学第四版上册.pdf" class="download-btn" download="生物化学第四版上册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="biology">
+                <h2 class="textbook-title">生物化学（第四版）下册</h2>
+                <div class="textbook-info">
+                    <p>作者：王镜岩、朱圣庚</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：生物专业</p>
+                </div>
+                <a href="textbooks/生物化学第四版下册.pdf" class="download-btn" download="生物化学第四版下册.pdf">点击下载PDF</a>
+            </div>
+
+            <div class="textbook-card" data-category="biology">
+                <h2 class="textbook-title">遗传学（第三版）</h2>
+                <div class="textbook-info">
+                    <p>作者：刘祖洞</p>
+                    <p>出版社：高等教育出版社</p>
+                    <p>适用专业：生物专业</p>
+                </div>
+                <a href="textbooks/遗传学第三版.pdf" class="download-btn" download="遗传学第三版.pdf">点击下载PDF</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2026 学习资源中心 - 所有教科书仅供学习使用</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">如有版权问题，请联系我们删除</p>
+    </footer>
+
+    <script>
+        // 分类筛选功能
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const textbookCards = document.querySelectorAll('.textbook-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 移除所有按钮的active类
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // 给当前点击的按钮添加active类
+                this.classList.add('active');
+                
+                const category = this.getAttribute('data-category');
+                
+                // 筛选卡片
+                textbookCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 下载按钮点击事件
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // 模拟下载提示（可选保留）
+                const textbookName = this.closest('.textbook-card').querySelector('.textbook-title').textContent;
+                alert(`开始下载：${textbookName}.pdf`);
+            });
+        });
+    </script>
+</body>
+</html>
